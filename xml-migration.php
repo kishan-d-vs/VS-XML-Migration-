@@ -35,11 +35,19 @@ function vs_xml_migration_add_pages()
 function vsblc_xml_migration_options_page()
 {
 ?>
+    <style>
+        #progress-bar {
+            width: 100%;
+            height: 20px;
+            display: none;
+        }
+    </style>
     <div class="wrap">
         <h1>XML Migration</h1>
         <input type="text" name="api_url" id="api-url" value="https://raw.githubusercontent.com/kishan-d-vs/xml-api/main/api.xml" />
         <button id="vs-migration-button" class="button-primary">XML Migration</button>
         <div id="vs-migration-results"></div>
+        <progress id="progress-bar" max="100" value="0"></progress>
     </div>
 <?php
 }
@@ -57,7 +65,7 @@ add_action('wp_ajax_vs_xml_migration', 'vs_xml_migration');
 function vs_xml_migration_call()
 {
     $api_Link = isset($_POST['api_Link']) ? $_POST['api_Link'] : "";
-    if($api_Link != ""){
+    if ($api_Link != "") {
         $response = wp_remote_get($api_Link);
         if (is_wp_error($response)) {
             echo 'Unable to retrieve file content.';
@@ -791,12 +799,12 @@ function xml_migration_process_postmeta_tags($item, &$elements)
                 ]);
                 break;
 
-            // Add cases for other specific meta keys you want to handle
-            // case 'another_meta_key':
-            //     $elements[] = create_elementor_widget("widget_type", [
-            //         "setting" => $meta_value,
-            //     ]);
-            //     break;
+                // Add cases for other specific meta keys you want to handle
+                // case 'another_meta_key':
+                //     $elements[] = create_elementor_widget("widget_type", [
+                //         "setting" => $meta_value,
+                //     ]);
+                //     break;
 
             default:
                 // Handle any other meta keys if needed
